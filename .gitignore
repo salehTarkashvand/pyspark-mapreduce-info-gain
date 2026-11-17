@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+data/*.parquet
+output/*.pkl
+output/*.png
+output/*.csv
