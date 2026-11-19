@@ -1,5 +1,3 @@
-بفرمایید. این هم کل متن فایل `README.md` به صورت یکجا. فقط کافی است کل این کد را کپی کنید و در فایل `README.md` قرار دهید.
-
 ```markdown
 # PySpark MapReduce: Information Gain for Feature Selection
 
@@ -72,43 +70,5 @@ ember-mapreduce/
 
 The experiments demonstrate the impact of parallelization in the Map phase. Increasing the number of Map tasks generally reduces execution time due to parallel processing. However, on a machine with limited RAM (e.g., 8GB), increasing the number of tasks beyond a certain threshold (e.g., >5) can lead to network buffer errors (`No buffer space available`), highlighting the trade-off between parallelism and hardware constraints.
 
-## 🏗️ System Architecture
-
-The following diagram illustrates the data flow and the MapReduce pipeline implemented in this project:
-
-```mermaid
-‍‍‍‍‍‍
-graph TD
-    %% Styling
-    classDef data fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef process fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    classDef storage fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
-    classDef output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-
-    %% Data Ingestion
-    A[(EMBER 2018 Dataset\nParquet Files)]:::data -->|Load Data| B(Pandas DataFrame):::process
-    B -->|Sample 10,000 rows| C(Python List of Dictionaries):::process
-    C -->|sc.parallelize| D{RDD Partitioning}:::process
-
-    %% MapReduce Phase
-    D -->|Split by Map Tasks| E[Map Phase: Local Contingency\nFeature ID, Value Bin, Label]:::process
-    E -->|Shuffle & Sort| F[Reduce Phase: Aggregate Counts\nSum of Frequencies]:::process
-
-    %% Aggregation & Calculation
-    F -->|Collect to Driver| G(Aggregated Contingency Table):::storage
-    G -->|Calculate H(Y)| H[Global Label Entropy]:::process
-    G -->|Calculate H(Y|X)| I[Conditional Entropy per Feature]:::process
-    
-    H --> J{Information Gain Calculation}:::process
-    I --> J
-    J -->|IG = H(Y) - H(Y|X)| K[Feature Ranking]:::process
-
-    %% Output
-    K --> L[Top 100 Features]:::output
-    K --> M[Execution Time Metrics\nScenario 1 to 10]:::output
-    L --> N[(output/results.pkl)]:::storage
-    M --> N
-    M --> O[(output/results_table.csv)]:::storage
-
-##👨‍💻 Author
+## 👨‍💻 Author
 **Saleh Torkashvand** - *Master's Student in Artificial Intelligence*
